@@ -12,6 +12,6 @@
   .basic {
     width: 100%;
     height: 1000px;
-    background: #666666;
+    background: red;
   }
 </style>
