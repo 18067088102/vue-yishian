@@ -15,6 +15,9 @@ module.exports = {
   entry: {
     app: './src/main.js'
   },
+  externals: {
+    "BMap": "BMap"
+  },
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
@@ -31,6 +34,13 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.swf$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10000
+        }
+      },
       {
         test: /\.vue$/,
         loader: 'vue-loader',

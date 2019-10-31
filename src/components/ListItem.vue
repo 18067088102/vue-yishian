@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="item-container" v-for="(item,index) in school" :key="index">
+    <div class="item-container" @click="selectItem(item)" v-for="(item,index) in school" :key="index">
       <div class='img-container'>
         <img :src="url" class="head-img" />
         <div class='camera-status'>
@@ -48,6 +48,11 @@
     data() {
       return {
         url: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1545394714948&di=86c61a83d1b51b68fbd6f8884c4880e1&imgtype=0&src=http%3A%2F%2Fc.hiphotos.baidu.com%2Fimage%2Fpic%2Fitem%2F2f738bd4b31c870173d4b35d2a7f9e2f0708ff2f.jpg'
+      }
+    },
+    methods: {
+      selectItem(item) {
+        this.$emit('select', item)
       }
     }
   }
@@ -108,7 +113,7 @@
         align-items: center
         .name-text
           color: #333
-          font-size: 15px
+          font-size: 16px
           font-weight: 500
           width: 255px
           overflow: hidden
@@ -119,11 +124,15 @@
         flex-direction: row
         align-items: center
         justify-content: space-between
+        width: 255px
         .addr-left
           display: flex
           flex-direction: row
           align-items: center
           justify-content: center
+          overflow: hidden
+          text-overflow: ellipsis
+          white-space: nowrap
           .addr-img
             background-image: url('../assets/img/location.png')
             background-repeat:no-repeat

@@ -3,7 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import { post, get }  from "../config/axios";
+import { post, get }  from "../config/axios"
+
 
 Vue.prototype.$get = get;
 Vue.prototype.$post = post;

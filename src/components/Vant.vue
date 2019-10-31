@@ -1,26 +1,45 @@
 <template>
   <div>
-    <van-pull-refresh v-model="isDownLoading" @refresh="onDownRefresh">
-      <van-swipe :autoplay="3000" indicator-color="#09c2b1" class="swipe">
-        <van-swipe-item v-for="(image,index) in banners" :key="index">
-          <img :src="image.picture" width="100%" height="100%" />
-        </van-swipe-item>
-      </van-swipe>
-      <van-list v-model="isUpLoading" :finished="upFinished" :immediate-check="false" :offset="10" finished-text="我是有底线的" @load="onLoadList">
-        <ListItem :school="list"></ListItem>
-      </van-list>
-    </van-pull-refresh>
+    <div>
+      <v-header :title="title"></v-header>
+      <vant-header></vant-header>
+      <van-pull-refresh v-model="isDownLoading" @refresh="onDownRefresh">
+        <van-swipe :autoplay="3000" indicator-color="#09c2b1" class="swipe">
+          <van-swipe-item v-for="(image,index) in banners" :key="index">
+            <img :src="image.picture" width="100%" height="100%"/>
+          </van-swipe-item>
+        </van-swipe>
+        <van-list v-model="isUpLoading" :finished="upFinished" :immediate-check="false" :offset="10"
+                  finished-text="我是有底线的" @load="onLoadList">
+          <ListItem @select="selectSchool" :school="list"></ListItem>
+        </van-list>
+      </van-pull-refresh>
+    </div>
+    <div>
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import {Swipe, SwipeItem, List, PullRefresh} from 'vant'
-  import ListItem from "./ListItem";
+  import ListItem from "./ListItem"
+  import VantHeader from "./VantHeader"
+  import VHeader from "./Header"
 
   export default {
     name: "Vant",
+    props: {
+      lat: {
+        type: String
+      },
+      lng: {
+        type: String
+      }
+    },
     data() {
       return {
+        title: '壹食安家长端',
         list: [],
         isDownLoading: false, // 下拉刷新
         pageSize: 10, // 每页条数
@@ -35,20 +54,29 @@
     },
     components: {
       ListItem,
+      VantHeader,
+      VHeader,
       [Swipe.name]: Swipe,
       [SwipeItem.name]: SwipeItem,
       [List.name]: List,
       [PullRefresh.name]: PullRefresh
     },
     created() {
+      // console.log(this.lat, this.lng)
       this.getBanner()
       this.getListData()
     },
     methods: {
+      selectSchool(school) {
+        this.$router.push({
+          path: '/VantDetail',
+          query: {title: school.name}
+        })
+      },
       getBanner() {
         const _self = this
         this.$post('appletBanner/query').then(res => {
-          console.log(res)
+          // console.log(res)
           if (res.code === 0) {
             _self.banners = res.data
           }
@@ -58,13 +86,15 @@
       },
       getListData() {
         const _self = this
+        const lat = localStorage.getItem("lat");
+        const lng = localStorage.getItem("lng");
         this.$post('comCompany/list', {
           'page': _self.pageIndex,
           'rows': _self.pageSize,
-          'longitude': 117.46928,
-          'latitude': 31.8877
+          'longitude': lng,
+          'latitude': lat
         }).then(res => {
-          console.log(res)
+          // console.log(res)
           if (res.code === 0) {
             const rows = res.records
             if (rows == null || rows.length === 0) {
