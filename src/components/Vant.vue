@@ -70,7 +70,7 @@
       selectSchool(school) {
         this.$router.push({
           path: '/VantDetail',
-          query: {title: school.name}
+          query: {title: school.name, companyId: school.id}
         })
       },
       getBanner() {

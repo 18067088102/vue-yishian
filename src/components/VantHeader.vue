@@ -43,6 +43,7 @@
               }
               localStorage.setItem("lat", options.latitude);
               localStorage.setItem("lng", options.longitude);
+              localStorage.setItem("openId", "oHTbI5X4QF18XLENE0mX_s-orPSY");
             },
             function (e) {
               window.alert('定位失败')

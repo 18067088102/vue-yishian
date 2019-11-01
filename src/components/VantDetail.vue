@@ -23,7 +23,8 @@
       return {
         title: this.$route.query.title,
         classMap: [],
-        active: 1
+        active: 0,
+        companyId: this.$route.query.companyId,
       }
     },
     components: {
@@ -32,7 +33,28 @@
       [Tab.name]: Tab,
       [Tabs.name]: Tabs
     },
+    created() {
+      this.getVideoLink()
+    },
     methods: {
+      getVideoLink() {
+        const _self = this
+        this.$post('comCompany/videoLink',{
+          'companyId': _self.companyId
+        }).then(res => {
+          console.log(res)
+          if (res.code === 0) {
+            if (res.data.length === 0) {
+              window.alert('暂无视频直播')
+            } else{
+              this.$refs['playerObj'].playerOptions.poster = res.data[0].cover
+              // this.$refs['playerObj'].playerOptions.sources[0].src = res.data[0].rtmp
+            }
+          }
+        }).catch(error => {
+          console.log(error)
+        })
+      },
       playVideo() {
         // this.$refs['playerObj'].videoSrc = 'rtmp://rtmp01open.ys7.com/openlive/3476cdfc16ea4e3a93ee73431f502a79.hd'
         // this.$refs['playerObj'].playerOptions.sources[0].src = 'rtmp://rtmp01open.ys7.com/openlive/3476cdfc16ea4e3a93ee73431f502a79.hd'
@@ -40,7 +62,8 @@
       selectTab(name, title) {
         console.log(name, title)
         this.$router.push({
-          path: name
+          path: name,
+          query: {companyId: this.companyId}
         })
       }
     },

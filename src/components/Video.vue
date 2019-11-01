@@ -33,7 +33,7 @@
             type: 'application/x-mpegURL',
             src: 'http://hls01open.ys7.com/openlive/3476cdfc16ea4e3a93ee73431f502a79.hd.m3u8'
           }],
-          poster: "http://static.smartisanos.cn/pr/img/video/video_03_cc87ce5bdb.jpg", //你的封面地址
+          poster: "", //你的封面地址
           width: document.documentElement.clientWidth,
           notSupportedMessage: '此视频暂无法播放，请稍后再试' //允许覆盖Video.js无法播放媒体源时显示的默认信息。
         }
