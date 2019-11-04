@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-header :title="title" :show-back-btn="true" ></v-header>
+    <v-header :title="title" :show-back-btn="true"></v-header>
     <video-player ref="playerObj"></video-player>
     <van-tabs v-model="active" @click="selectTab" swipeable sticky color="#00B886" title-active-color="#00B886"
               title-inactive-color="#666666">
@@ -8,7 +8,6 @@
         <keep-alive><router-view></router-view></keep-alive>
       </van-tab>
     </van-tabs>
-
   </div>
 </template>
 
